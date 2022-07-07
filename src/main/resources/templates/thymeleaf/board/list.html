@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>게시판 - 목록</title>
+    <link rel="stylesheet" href="/styles/css/bootstrap.min.css" />
+     <link th:href="@{/styles/css/board.css}" rel="stylesheet" />
+  </head>
+  <body>
+    <header th:insert="common/header.html"></header> <!-- jsp의 include 기능 Thymeleaf -->
+    <div class="container">
+      <table class="table">
+        <thead class="thead-light">
+          <tr class="text-center">
+            <th scope="col">#</th>
+            <th scope="col">제목</th>
+            <th scope="col">작성자</th>
+            <th scope="col">작성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-center" th:each="post,numStat : ${postList}">
+            <th scope="row">
+              <span th:text="${pagination.startIndex - numStat.index}"></span>
+            </th>
+            <td>
+              <a th:href="@{'/post/' + ${post.id}}">
+                <span th:text="${post.title}"></span>
+              </a>
+            </td>
+            <td>
+              <span th:text="${post.author}"></span>
+            </td>
+            <td>
+              <span th:text="${#temporals.format(post.regdate, 'yyyy-MM-dd HH:mm')}"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+      	<div id="pagination-div" >
+      		<ul class="pagination" id="pagination"></ul>
+      	</div>
+      </div>
+      <div class="row">
+        <div class="col-auto mr-auto">
+        
+        </div>
+        <div class="col-auto">
+          <a class="btn btn-primary" th:href="@{/post}" role="button">글쓰기</a>
+        </div>
+      </div>
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.twbsPagination.js"></script>
+    <script th:inline="javascript">
+    
+    var flag =false;
+    
+    $('#pagination-div').twbsPagination({		 	    
+		    totalPages: "[[${pagination.listCnt}]]",	// 총 페이지 번호 수
+		    visiblePages: "[[${pagination.pageCnt}]]",	// 하단에서 한번에 보여지는 페이지 번호 수
+		    startPage : "[[${pagination.startPage}]]", // 시작시 표시되는 현재 페이지
+		    initiateStartPageClick: false,	// 플러그인이 시작시 페이지 버튼 클릭 여부 (default : true)
+		    first : "처음",	// 페이지네이션 버튼중 처음으로 돌아가는 버튼에 쓰여 있는 텍스트
+		    prev : "이전",	// 이전 페이지 버튼에 쓰여있는 텍스트
+		    next : "다음",	// 다음 페이지 버튼에 쓰여있는 텍스트
+		    last : "맨끝",	// 페이지네이션 버튼중 마지막으로 가는 버튼에 쓰여있는 텍스트
+		    nextClass : "page-item next",	// 이전 페이지 CSS class
+		    prevClass : "page-item prev",	// 다음 페이지 CSS class
+		    lastClass : "page-item last",	// 마지막 페이지 CSS calss
+		    firstClass : "page-item first",	// 첫 페이지 CSS class
+		    pageClass : "page-item",	// 페이지 버튼의 CSS class
+		    activeClass : "active",	// 클릭된 페이지 버튼의 CSS class
+		    disabledClass : "disabled",	// 클릭 안된 페이지 버튼의 CSS class
+		    anchorClass : "page-link",	//버튼 안의 앵커에 대한 CSS class
+		    
+		    onPageClick: function (event, page) {
+				pageClick(page);
+		    }
+		});
+		
+
+		// 페이지 버튼 클릭 가능
+	$("#pagination-div").twbsPagination('enable');
+	
+	function pageClick(page){
+		if(flag == true){
+			location.href="/?page=" + page;
+		}else{
+			flag = true;
+		}
+	}
+	
+    </script>
+  </body>
+</html>

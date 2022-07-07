@@ -1,0 +1,18 @@
+<div class="navbar navbar-dark bg-dark shadow-sm mb-3">
+  <div class="container d-flex justify-content-between">
+    <a href="/" class="navbar-brand d-flex align-items-center">
+      <strong>게시판</strong>
+    </a>
+  </div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: block;">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="float: right;">
+      <li class="nav-item">
+        <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+        <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
+      </li>
+    </ul>
+  </div>
+</div>

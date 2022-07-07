@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+
+<mapper namespace="demo4.mybatisRepository.FileMybatisRepository">
+	<select id="getFile" resultType="FileEntity" parameterType="Long">
+		SELECT * FROM FILE_ENTITY
+		WHERE ID = #{id}
+	</select>
+	
+	<insert id="saveFile" parameterType="FileEntity" useGeneratedKeys="true" keyProperty="id" >
+		INSERT INTO FILE_ENTITY
+		(
+			FILE_PATH,
+			FILENAME,
+			ORIG_FILENAME
+		)
+		VALUES
+		(
+			#{filePath},
+			#{filename},
+			#{origFilename}
+		)
+	</insert>
+	
+</mapper>

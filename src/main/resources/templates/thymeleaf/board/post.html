@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>게시판 - 글쓰기</title>
+    <script src="/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="/styles/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link th:href="@{/styles/css/ckEditor.css}" rel="stylesheet" />
+	<link th:href="@{/styles/css/board.css}" rel="stylesheet" />
+     
+    <script src="/js/bootstrap.min.js"></script>
+     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+	 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+  </head>
+  <body>
+    <header th:insert="common/header.html"></header>
+    <div class="container">
+      <form action="/post" method="post" enctype="multipart/form-data" id="boardForm">
+        <div class="form-group row">
+          <label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
+          <div class="col-sm-10">
+            <input type="text" name="title" class="form-control" id="inputTitle" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputAuthor" class="col-sm-2 col-form-label"><strong>작성자</strong></label>
+          <div class="col-sm-10">
+            <input type="text" name="author" class="form-control" id="inputAuthor" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
+          <div class="col-sm-10">
+            <textarea type="text" name="content" class="form-control" id="inputContent"></textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputFile" class="col-sm-2 col-form-label"><strong>첨부 파일</strong></label>
+          <div class="col-sm-10">
+            <div class="custom-file" id="inputFile">
+              <!-- <input name="file" type="file" class="custom-file-input" id="customFile" /> -->
+              <input type="file" id="customFile" name="file" accept="image/*">
+              <label class="custom-file-label" for="customFile">파일을 선택해 주세요.</label>
+              
+              <!-- 이미지 미리보기 영역 -->
+			<div id="imgViewArea" style="margin-top:10px; display:none;">
+				<img id="imgArea" style="width:200px; height:100px;" onerror="imgAreaError()"/>
+			</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+        	<label for="datepicker" class="col-sm-2 col-form-label"><strong>작성일</strong></label>
+          <div class="col-sm-10">
+            <input type="text" id="datepicker" readonly>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-auto mr-auto"></div>
+          <div class="col-auto">
+            <!--<input class="btn btn-primary" type="submit" role="button" value="글쓰기" /> -->
+            <input class="btn btn-primary" onclick="validCheck();" role="button" value="글쓰기" />
+            <input class="btn btn-info" role="button" value="뒤로" th:onclick="location.href='/'" />
+          </div>
+        </div>
+      </form>
+    </div>
+   
+    <script>
+      $('.custom-file-input').on('change', function () {
+        var fileName = $(this).val().split('\\').pop();
+        $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
+      });
+      
+       $.datepicker.setDefaults({
+        showOn : "both",
+        buttonImage: "images/calandar.png",
+        buttonImageOnly : true,
+        dateFormat: 'yy-mm-dd',
+        prevText: '이전 달',
+        nextText: '다음 달',
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        showMonthAfterYear: true,
+        yearSuffix: '년'
+    });
+      
+       $( function() {
+	  		  $( "#datepicker" ).datepicker();
+	  } );
+ 
+   	ClassicEditor.create( document.querySelector( '#inputContent' ), {
+	    removePlugins: [ 'Heading' ],
+	    language: "ko"
+	  } );
+  
+  	function validCheck(){
+		// inputTitle, inputAuthor inputContent
+		
+		if($('#inputTitle').val() == '' && $('#inputAuthor').val() =='' && $('#inputContent').val() == ''){
+			alert("입력하지 않은 항목이 있습니다.");
+			return;
+		}
+		
+		$('#boardForm').submit();
+	}
+	
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#imgArea').attr('src', e.target.result); 
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+	$(":input[name='file']").change(function() {
+		if( $(":input[name='file']").val() == '' ) {
+			$('#imgArea').attr('src' , '');  
+		}
+		$('#imgViewArea').css({ 'display' : '' });
+		readURL(this);
+	});
+
+	// 이미지 에러 시 미리보기영역 미노출
+	function imgAreaError(){
+		$('#imgViewArea').css({ 'display' : 'none' });
+	}
+      
+    </script>
+  </body>
+</html>

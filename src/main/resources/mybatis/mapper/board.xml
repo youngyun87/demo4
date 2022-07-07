@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+
+<mapper namespace="demo4.mybatisRepository.BoardMybatisRepository">
+
+	<select id="getBoardCnt" resultType="int">
+		SELECT count(*) as listCnt FROM BOARD
+	</select>
+	
+	<select id="getBoardList" resultType="Board">
+		SELECT * FROM BOARD
+		LIMIT #{startList}, #{listSize}
+	</select>
+
+	
+	<select id="getPost" resultType="Board" parameterType="Long">
+		SELECT * FROM BOARD
+		WHERE id = #{id}
+	</select>
+	
+	<insert id="insertPost"  parameterType="Board">
+		INSERT INTO BOARD
+		(
+			AUTHOR,
+			CONTENT,
+			TITLE,
+			REGDATE
+		)
+		VALUES
+		(
+			#{author},
+			#{content},
+			#{title},
+			now()
+		)
+	</insert>
+	
+	<update id="updateBoard"  parameterType="Board">
+		UPDATE BOARD
+		SET 
+			AUTHOR= #{author},
+			CONTENT= #{content},
+			TITLE= #{title},
+			MODDATE = NOW() 
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="deletePost"  parameterType="Long">
+		DELETE FROM BOARD
+		WHERE id = #{id}
+	</delete>
+	
+</mapper>
