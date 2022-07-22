@@ -1,28 +1,44 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.1'
+    id 'org.springframework.boot' version '2.7.1'   // 스프링부트 버전
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
+    id 'java'   // jar 압축
 }
 
 group = 'demo4'
 version = '1'
-sourceCompatibility = '11'
+// jar 파일 명은 demo4-1.jar
+sourceCompatibility = '11'  // 자바 버전
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    // 타임리프
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    
+    // 스프링부트
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // my-batis
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+    // mysql
     implementation 'mysql:mysql-connector-java'
+
+    // 레디스
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.session:spring-session-data-redis'
+
+    // 스프링 시큐리티
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
+    // validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // 롬복
     compileOnly 'org.projectlombok:lombok'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
