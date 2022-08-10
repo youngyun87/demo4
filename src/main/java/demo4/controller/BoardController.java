@@ -152,12 +152,4 @@ public class BoardController {
         return "thymeleaf/preview.html";
     }
 
-    @GetMapping("/redisTest")
-    @ResponseBody
-    public String redisTest(HttpSession session) {
-        session.setAttribute("redisTest", "redis123");
-        return session.getId() + "\nHello " + session.getAttribute("redisTest");
-    }
-    
-
 }

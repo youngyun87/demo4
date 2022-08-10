@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Sample</title>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <div id="example">
+      <p>원본 메시지: "{{ message }}"</p>
+      <p>역순으로 표시한 메시지: "{{ reversedMessage }}"</p>
+      <p>뒤집힌 메시지: "{{ reversedMessage2() }}"</p>
+    </div>
+    <script>
+    var vm = new Vue({
+      el: '#example',
+      data: {
+        message: '안녕하세요'
+      },
+      computed: {
+        // 계산된 getter
+        reversedMessage: function () {
+          // `this` 는 vm 인스턴스를 가리킵니다.
+          return this.message.split('').reverse().join('')
+        }
+      },
+      methods: {
+        reversedMessage2: function () {
+          return this.message.split('').reverse().join('')
+        }
+      }
+    })
+    </script>
+  </body>
+</html>
+
+
+
