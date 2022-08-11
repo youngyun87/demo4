@@ -30,8 +30,6 @@ export default{
 
     },
 	methods : {
-		alertMain : function(){
-			alert("메인로고 입니다.");
-		}
+
 	}
 }

@@ -50,7 +50,7 @@ public class WeatherController {
             urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=%2B5m3O8Rjr04idU6zglHxFz3KCCIwKfrl2hIGwYLK4ykKYV6dVbfPUSux%2FRAv5u6J%2FrU038hJczJtsKnUisHU2g%3D%3D"); /*Service Key*/
 
             urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
-            urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("1000", "UTF-8")); /*한 페이지 결과 수*/
+            urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("300", "UTF-8")); /*한 페이지 결과 수*/
             urlBuilder.append("&" + URLEncoder.encode("dataType","UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8")); /*요청자료형식(XML/JSON) Default: XML*/
             urlBuilder.append("&" + URLEncoder.encode("base_date","UTF-8") + "=" + URLEncoder.encode(strToday, "UTF-8")); /*‘날짜 yyyymmdd*/
 
